@@ -1,0 +1,752 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Холодная голова — библиотека по психологии трейдинга</title>
+<meta name="description" content="Свободная библиотека по психологии трейдинга: конспекты и книги в общественном достоянии. Бесплатно, без регистрации.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231f6f78'/%3E%3Cpath d='M5 21 L12 13 L17 18 L27 7' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--surface:#ffffff;--surface2:#efece4;--text:#1d2427;--muted:#5b676b;--line:#dcd7ca;
+  --accent:#1f6f78;--accent-ink:#ffffff;--accent-soft:#d9ecee;--warm:#b4572b;--warm-soft:#f6e3d8;
+  --good:#2f7d4f;--shadow:0 1px 2px rgba(20,30,30,.06),0 6px 18px rgba(20,30,30,.06);
+  --ui:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --display:'Fraunces',Georgia,'Times New Roman',serif;
+  --serif:'Source Serif 4',Georgia,'Times New Roman',serif;
+  --fs:19px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#111719;--surface:#182124;--surface2:#1f2b2f;--text:#e6ecec;--muted:#98a8ab;--line:#2b3a3e;
+    --accent:#5cc0c9;--accent-ink:#0b1416;--accent-soft:#1b3a3e;--warm:#e58f63;--warm-soft:#3a2a20;
+    --good:#6cc690;--shadow:0 1px 2px rgba(0,0,0,.4),0 6px 18px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111719;--surface:#182124;--surface2:#1f2b2f;--text:#e6ecec;--muted:#98a8ab;--line:#2b3a3e;
+  --accent:#5cc0c9;--accent-ink:#0b1416;--accent-soft:#1b3a3e;--warm:#e58f63;--warm-soft:#3a2a20;
+  --good:#6cc690;--shadow:0 1px 2px rgba(0,0,0,.4),0 6px 18px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--ui);font-size:16px;line-height:1.55;min-height:100vh;display:flex;flex-direction:column}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+a{color:var(--accent)}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+.wrap{width:100%;max-width:1120px;margin:0 auto;padding:0 16px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:-999px;top:8px;background:var(--accent);color:var(--accent-ink);padding:8px 12px;border-radius:8px;z-index:100}
+.skip:focus{left:8px}
+
+/* header */
+header.top{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:10px;height:60px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-family:var(--display);font-weight:700;font-size:20px;margin-right:auto}
+.brand svg{flex:none}
+.nav{display:flex;align-items:center;gap:6px}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 12px;cursor:pointer;text-decoration:none;color:var(--text);font-weight:500;font-size:14px;line-height:1.2;min-height:38px}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent}
+.btn[aria-pressed="true"],.btn.on{background:var(--accent-soft);border-color:var(--accent)}
+.count{background:var(--warm);color:#fff;border-radius:999px;font-size:12px;padding:1px 7px;font-weight:600}
+@media (max-width:560px){.brand span.nm{display:none}.btn .lbl{display:none}}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:28px;align-items:center;padding:36px 0 20px}
+@media (max-width:860px){.hero{grid-template-columns:1fr;padding-top:24px}}
+.eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 10px}
+h1.title{font-family:var(--display);font-size:clamp(32px,5vw,50px);line-height:1.08;margin:0 0 14px;font-weight:700;letter-spacing:-.01em}
+.lead{font-size:18px;color:var(--muted);margin:0 0 18px;max-width:52ch}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{font-size:13px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 11px;color:var(--muted)}
+.cyclebox{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px 14px 8px;box-shadow:var(--shadow)}
+.cyclebox h2{font-size:13px;margin:0 0 4px 4px;color:var(--muted);font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.cyclebox svg{width:100%;height:auto;display:block}
+.cyc-line{fill:none;stroke:var(--accent);stroke-width:3.5;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 2.2s ease-out .2s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.cyc-area{fill:var(--accent);opacity:.08}
+.cyc-dot{fill:var(--surface);stroke:var(--warm);stroke-width:3}
+.cyc-txt{font:600 12.5px var(--ui);fill:var(--text)}
+.cyc-sub{font:400 11px var(--ui);fill:var(--muted)}
+
+/* resume */
+.resume{display:flex;align-items:center;gap:14px;background:var(--accent-soft);border:1px solid var(--accent);border-radius:14px;padding:14px 16px;margin:10px 0 6px;flex-wrap:wrap}
+.resume .tx{flex:1;min-width:200px}
+.resume b{display:block;font-family:var(--display);font-size:18px}
+.resume small{color:var(--muted)}
+
+/* library controls */
+section.lib{padding:22px 0 40px}
+.lib h2.h{font-family:var(--display);font-size:28px;margin:0 0 14px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
+.searchrow{position:relative}
+.searchrow input{width:100%;padding:13px 14px 13px 44px;border-radius:12px;border:1px solid var(--line);background:var(--bg);font-size:16px}
+.searchrow svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:14px}
+.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px;font-weight:600}
+.field select,.field input{width:100%;padding:9px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);min-height:40px}
+.years{display:flex;gap:8px}
+.chiprow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px}
+.chiprow .cl{font-size:12px;color:var(--muted);font-weight:600;margin-right:4px;min-width:84px}
+.chip{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:5px 12px;font-size:13.5px;cursor:pointer}
+.chip:hover{border-color:var(--accent)}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.statusrow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:18px 2px 12px;flex-wrap:wrap}
+.statusrow .found{color:var(--muted);font-size:14px}
+.statusrow .found b{color:var(--text)}
+
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
+.card{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;text-decoration:none;color:var(--text);box-shadow:var(--shadow);transition:transform .15s,border-color .15s;position:relative;overflow:hidden}
+.card:hover{transform:translateY(-3px);border-color:var(--accent)}
+.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--cc,var(--accent))}
+.card .ty{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--cc,var(--accent));margin-bottom:6px}
+.card h3{font-family:var(--display);font-size:20px;line-height:1.2;margin:0 0 4px}
+.card .au{color:var(--muted);font-size:14px;margin-bottom:8px}
+.card p.ds{font-size:14.5px;margin:0 0 12px;color:var(--text);opacity:.88;flex:1}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.badge{font-size:12px;background:var(--surface2);border-radius:6px;padding:2px 8px;color:var(--muted)}
+.badge.own{background:var(--accent-soft);color:var(--accent)}
+.badge.pd{background:var(--warm-soft);color:var(--warm)}
+.prog{height:6px;background:var(--surface2);border-radius:99px;overflow:hidden;margin-top:6px}
+.prog i{display:block;height:100%;background:var(--good);border-radius:99px}
+.proglbl{font-size:12px;color:var(--muted);margin-top:4px}
+
+/* hits */
+.hits{margin-top:26px}
+.hits h3{font-family:var(--display);font-size:22px;margin:0 0 10px}
+.hit{display:block;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px;text-decoration:none;color:var(--text)}
+.hit:hover{border-color:var(--accent)}
+.hit .w{font-size:12.5px;color:var(--muted);margin-bottom:3px}
+mark{background:#ffe27a;color:#2a2200;border-radius:3px;padding:0 2px}
+.empty{text-align:center;padding:44px 16px;border:1px dashed var(--line);border-radius:16px;color:var(--muted)}
+.empty b{display:block;font-family:var(--display);font-size:22px;color:var(--text);margin-bottom:6px}
+
+/* book page */
+.bookpage{padding:28px 0 50px;max-width:820px}
+.crumb{font-size:14px;margin-bottom:14px}
+.bookpage h1{font-family:var(--display);font-size:clamp(28px,4.5vw,42px);line-height:1.1;margin:6px 0 6px}
+.bookpage .au{font-size:18px;color:var(--muted);margin-bottom:12px}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:18px 0}
+.meta div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.meta small{display:block;color:var(--muted);font-size:12px}
+.meta span{font-weight:600}
+.toc{list-style:none;padding:0;margin:12px 0 20px;display:grid;gap:8px}
+.toc a{display:flex;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:11px 14px;text-decoration:none;color:var(--text)}
+.toc a:hover{border-color:var(--accent)}
+.toc .n{flex:none;width:28px;height:28px;border-radius:50%;background:var(--surface2);display:grid;place-items:center;font-size:13px;font-weight:600}
+.toc .rd .n{background:var(--good);color:#fff}
+.warn{background:var(--warm-soft);border:1px solid var(--warm);border-radius:12px;padding:12px 14px;margin:16px 0;font-size:14.5px}
+.links{display:grid;gap:10px;margin:14px 0}
+.links a{display:flex;justify-content:space-between;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px 16px;text-decoration:none;color:var(--text);font-weight:500}
+.links a:hover{border-color:var(--accent)}
+.links small{color:var(--muted);font-weight:400}
+
+/* reader */
+.rbar{position:fixed;top:60px;left:0;right:0;height:4px;background:var(--surface2);z-index:29}
+.rbar i{display:block;height:100%;width:0;background:var(--accent);transition:width .15s}
+.rtools{display:flex;gap:8px;align-items:center;padding:20px 0 6px;flex-wrap:wrap;position:relative}
+.rtools .sp{flex:1}
+.rtext{max-width:70ch;margin:0 auto;padding:10px 0 20px;font-family:var(--serif);font-size:var(--fs);line-height:1.7}
+.rtext.sans{font-family:var(--ui)}
+.rtext .kick{font:600 13px var(--ui);color:var(--accent);text-transform:uppercase;letter-spacing:.07em;margin:20px 0 8px}
+.rtext h1{font-family:var(--display);font-size:1.7em;line-height:1.15;margin:0 0 .7em}
+.para{position:relative;padding:2px 44px 2px 0;border-radius:8px;transition:background .6s}
+.para p{margin:0 0 1em}
+.para.flash{background:color-mix(in srgb,var(--warm) 22%,transparent)}
+.bm{position:absolute;right:0;top:4px;width:34px;height:34px;border-radius:8px;border:1px solid transparent;background:transparent;cursor:pointer;color:var(--muted);display:grid;place-items:center}
+.bm:hover,.para:focus-within .bm{border-color:var(--line);background:var(--surface)}
+.bm[aria-pressed="true"]{color:var(--warm)}
+.bm[aria-pressed="true"] svg{fill:currentColor}
+.rnav{max-width:70ch;margin:0 auto;display:flex;justify-content:space-between;gap:10px;padding:10px 0 50px}
+.drawer{position:fixed;top:0;bottom:0;left:0;width:min(340px,88vw);background:var(--surface);border-right:1px solid var(--line);z-index:60;transform:translateX(-102%);transition:transform .25s;padding:18px;overflow:auto;box-shadow:var(--shadow)}
+.drawer.open{transform:none}
+.drawer h2{font-family:var(--display);font-size:20px;margin:0 0 12px}
+.drawer .toc a{padding:9px 12px}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:55;display:none}
+.scrim.on{display:block}
+.setp{position:absolute;right:0;top:64px;width:min(320px,100%);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--shadow);z-index:20;display:none}
+.setp.open{display:block}
+.setp .row{margin-bottom:12px}
+.setp .row:last-child{margin-bottom:0}
+.setp label.t{display:block;font-size:12px;color:var(--muted);font-weight:600;margin-bottom:6px}
+.setp input[type=range]{width:100%;accent-color:var(--accent)}
+.seg{display:flex;gap:6px}
+.seg .btn{flex:1;justify-content:center}
+
+/* bookmarks */
+.bmpage{padding:28px 0 50px;max-width:820px}
+.bmpage h1{font-family:var(--display);font-size:34px;margin:0 0 6px}
+.bmitem{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start}
+.bmitem a.go{flex:1;text-decoration:none;color:var(--text)}
+.bmitem .w{font-size:13px;color:var(--muted);margin-bottom:4px}
+.bmitem q{font-family:var(--serif);font-size:16px;quotes:none}
+
+footer.foot{margin-top:auto;border-top:1px solid var(--line);background:var(--surface2);padding:22px 0;font-size:13.5px;color:var(--muted)}
+footer.foot b{color:var(--text)}
+</style>
+</head>
+<body>
+<a class="skip" href="#main" id="skip">Перейти к содержимому</a>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#/" aria-label="Холодная голова">
+      <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M5 21 L12 13 L17 18 L27 7" fill="none" stroke="var(--accent-ink)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="nm" id="brandNm"></span>
+    </a>
+    <nav class="nav" id="nav"></nav>
+  </div>
+</header>
+<main id="main" tabindex="-1"></main>
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Оглавление"></aside>
+<footer class="foot"><div class="wrap" id="foot"></div></footer>
+
+<script>
+'use strict';
+/* ===================== ДАННЫЕ ===================== */
+const CATS={
+  emotions:{ru:'Эмоции',en:'Emotions',c:'#c4513a'},
+  discipline:{ru:'Дисциплина',en:'Discipline',c:'#2f6fb0'},
+  risk:{ru:'Риск',en:'Risk',c:'#b88a1a'},
+  crowd:{ru:'Психология толпы',en:'Crowd psychology',c:'#7b4fa3'},
+  mind:{ru:'Мышление и философия',en:'Mind & philosophy',c:'#2f8068'}
+};
+const TAGS={
+  fear:{ru:'страх',en:'fear'},greed:{ru:'жадность',en:'greed'},euphoria:{ru:'эйфория',en:'euphoria'},
+  stress:{ru:'стресс',en:'stress'},plan:{ru:'торговый план',en:'trading plan'},journal:{ru:'журнал сделок',en:'trade journal'},
+  habits:{ru:'привычки',en:'habits'},probability:{ru:'вероятности',en:'probability'},drawdown:{ru:'просадка',en:'drawdown'},
+  position:{ru:'размер позиции',en:'position sizing'},crowd:{ru:'толпа',en:'crowd'},bubbles:{ru:'пузыри',en:'bubbles'},
+  speculation:{ru:'спекуляция',en:'speculation'},stoic:{ru:'стоицизм',en:'stoicism'},thinking:{ru:'мышление',en:'mindset'},
+  classic:{ru:'классика',en:'classic'},history:{ru:'история рынков',en:'market history'},biography:{ru:'биография',en:'biography'}
+};
+const ORIG={en:{ru:'Английский',en:'English'},fr:{ru:'Французский',en:'French'},grc:{ru:'Древнегреческий',en:'Ancient Greek'},'ru/en':{ru:'Русский / English',en:'Russian / English'}};
+const EDITORS={ru:'Редакция «Холодной головы»',en:'Cold Head editors'};
+
+const BOOKS=[
+{id:'emotions',kind:'note',title:{ru:'Эмоции на рынке',en:'Emotions in the Market'},author:EDITORS,year:2026,orig:'ru/en',license:'own',cat:'emotions',
+ tags:['fear','greed','euphoria','stress'],
+ desc:{ru:'Откуда берутся страх и жадность, как они ломают решения и что помогает остыть до того, как нажата кнопка.',en:'Where fear and greed come from, how they distort decisions, and what helps you cool down before you press the button.'},
+ chapters:[
+ {t:{ru:'Почему рынок будит эмоции',en:'Why the market stirs emotion'},p:{
+  ru:['Рынок — единственное место, где ошибка мгновенно превращается в число на экране. Каждая секунда приносит новую оценку вашего решения, и мозг реагирует на неё так же, как на любую угрозу или награду.',
+      'Деньги в сделке — не просто цифры. Для нас это безопасность, статус, свобода. Поэтому колебание цены ощущается как колебание почвы под ногами, а не как рабочая статистика.',
+      'Первый шаг к спокойной торговле — признать, что эмоции не слабость и не повод себя ругать. Это нормальная реакция. Задача не в том, чтобы ничего не чувствовать, а в том, чтобы чувства не принимали решения за вас.'],
+  en:['The market is the one place where a mistake instantly becomes a number on the screen. Every second brings a fresh verdict on your decision, and the brain reacts to it as it would to any threat or reward.',
+      'Money in a trade is not just digits. To us it means safety, status, freedom. That is why a price swing feels like the ground shaking under your feet rather than ordinary work statistics.',
+      'The first step toward calm trading is admitting that emotions are neither a weakness nor a reason for self-blame. They are a normal reaction. The goal is not to feel nothing, but to keep feelings from making the decisions for you.']}},
+ {t:{ru:'Страх и жадность',en:'Fear and greed'},p:{
+  ru:['Страх заставляет закрывать прибыльную сделку слишком рано и не входить там, где сигнал уже был. Он шепчет: «Забери хоть что-то». А потом цена идёт дальше без вас.',
+      'Жадность работает зеркально. Она требует держать позицию «ещё чуть-чуть», двигать стоп дальше и добавлять объём после серии удач. Эйфория после выигрыша опасна не меньше, чем паника после потери.',
+      'Обе эмоции растут от одного корня — неопределённости. Когда у вас нет заранее определённых правил выхода, любое движение цены превращается в вопрос без ответа, и решение принимает настроение.',
+      'Полезный вопрос в момент напряжения: «Что я сделал бы, если бы эта сделка была не моей?» Взгляд со стороны снижает накал и возвращает к правилам.'],
+  en:['Fear makes you close a winning trade too early and skip entries where the signal was already there. It whispers, “Just take something.” Then the price runs on without you.',
+      'Greed works as a mirror image. It demands holding “just a little longer”, moving the stop further away, and adding size after a winning streak. Euphoria after a win is no less dangerous than panic after a loss.',
+      'Both emotions grow from one root — uncertainty. When you have no predefined exit rules, every price move becomes a question without an answer, and mood makes the call.',
+      'A useful question in a tense moment: “What would I do if this trade were not mine?” A view from the outside lowers the heat and brings you back to the rules.']}},
+ {t:{ru:'Как остыть: практики',en:'Cooling down: practices'},p:{
+  ru:['Пауза. Если рука тянется к кнопке после убытка, встаньте, выпейте воды, пройдитесь две минуты. Импульс живёт недолго, и этого времени часто достаточно.',
+      'Дыхание. Медленный выдох длиннее вдоха успокаивает нервную систему. Попробуйте четыре секунды на вдох и шесть на выдох — пять повторений.',
+      'Правило «двух вопросов» перед входом: «Это есть в моём плане?» и «Сколько я готов потерять?». Если на один из вопросов нет ответа — сделки нет.',
+      'Ограничьте потери за день. Определите сумму или число убыточных сделок, после которых вы закрываете терминал. Заранее принятое решение легче выполнить, чем принять его в разгар эмоций.']
+  ,en:['Pause. If your hand reaches for the button after a loss, stand up, drink water, walk for two minutes. An impulse is short-lived, and that is often enough time.',
+      'Breathing. A slow exhale longer than the inhale calms the nervous system. Try four seconds in and six seconds out — five repetitions.',
+      'The “two questions” rule before an entry: “Is this in my plan?” and “How much am I ready to lose?”. If either question has no answer, there is no trade.',
+      'Cap your daily loss. Decide on an amount or a number of losing trades after which you close the terminal. A decision made in advance is easier to follow than one made in the heat of emotion.']}}
+ ]},
+{id:'discipline',kind:'note',title:{ru:'Дисциплина и торговый план',en:'Discipline and the Trading Plan'},author:EDITORS,year:2026,orig:'ru/en',license:'own',cat:'discipline',
+ tags:['plan','journal','habits'],
+ desc:{ru:'Как превратить намерения в правила: из чего состоит торговый план, как не нарушать его и зачем вести журнал.',en:'How to turn intentions into rules: what a trading plan contains, how to stick to it, and why a journal matters.'},
+ chapters:[
+ {t:{ru:'Зачем нужен план',en:'Why you need a plan'},p:{
+  ru:['Дисциплина — это не сила воли в моменте, а заранее принятые решения. Пилот не придумывает порядок действий в воздухе: он идёт по чек-листу. Торговому плану отведена та же роль.',
+      'Без плана каждое решение принимается заново, под давлением цены и настроения. Это утомляет и приводит к непоследовательности: сегодня вы торгуете одно, завтра — другое, и по результатам нельзя понять, что работает.',
+      'План не гарантирует прибыль. Он гарантирует, что результат можно оценить, а ошибки — найти и исправить.'],
+  en:['Discipline is not willpower in the moment but decisions made in advance. A pilot does not invent a procedure in mid-air; they follow a checklist. A trading plan plays the same role.',
+      'Without a plan every decision is made anew, under pressure from the price and your mood. It is exhausting and leads to inconsistency: today you trade one thing, tomorrow another, and the results do not tell you what works.',
+      'A plan does not guarantee profit. It guarantees that the result can be assessed, and mistakes can be found and fixed.']}},
+ {t:{ru:'Из чего состоит план',en:'What a plan contains'},p:{
+  ru:['Рынки и инструменты: что вы торгуете и в какое время. Чем уже список, тем лучше вы его знаете.',
+      'Условия входа: конкретные, проверяемые признаки. Если условие нельзя проверить «да/нет», оно слишком расплывчато.',
+      'Условия выхода: где вы признаёте идею неверной (стоп) и где фиксируете прибыль. Стоп определяется до входа, а не после.',
+      'Размер позиции и лимиты: сколько вы рискуете в одной сделке, в день и в неделю. Здесь же — правило остановки после серии убытков.',
+      'Запрещённые действия: усреднение убытков, вход «на отыгрыш», торговля в сильной усталости или раздражении. Список коротких «нельзя» работает лучше длинных рассуждений.'],
+  en:['Markets and instruments: what you trade and at what time. The narrower the list, the better you know it.',
+      'Entry conditions: specific, verifiable signs. If a condition cannot be checked as yes/no, it is too vague.',
+      'Exit conditions: where you admit the idea is wrong (the stop) and where you take profit. The stop is set before entry, not after.',
+      'Position size and limits: how much you risk per trade, per day and per week. This is also where the rule to stop after a losing streak lives.',
+      'Forbidden actions: averaging down losses, revenge entries, trading when exhausted or irritated. A short list of “never” works better than long reasoning.']}},
+ {t:{ru:'Журнал и разбор сделок',en:'The journal and trade review'},p:{
+  ru:['Журнал превращает опыт в данные. Записывайте для каждой сделки: причину входа, план выхода, итог и своё состояние до и после. Последнее важнее, чем кажется.',
+      'Раз в неделю делайте разбор. Отметьте сделки, где вы нарушили план, и посчитайте, во что обошлись нарушения. Часто выясняется, что система работает, а убытки приносят отступления от неё.',
+      'Оценивайте не результат отдельной сделки, а качество исполнения. Хорошая сделка — та, что соответствует плану, даже если закрылась в минус. Плохая — та, что нарушила план, даже если принесла прибыль.',
+      'Меняйте план не в разгар эмоций, а на спокойном разборе, и по одному параметру за раз. Так вы увидите, что именно повлияло на результат.'],
+  en:['A journal turns experience into data. For every trade write down the reason for entry, the exit plan, the outcome and your state before and after. The last one matters more than it seems.',
+      'Do a review once a week. Mark the trades where you broke the plan and count what the violations cost. Often it turns out that the system works, and the losses come from departures from it.',
+      'Judge not the outcome of a single trade but the quality of execution. A good trade is one that follows the plan, even if it closed at a loss. A bad one broke the plan, even if it made money.',
+      'Change the plan not in the heat of emotion but during a calm review, and one parameter at a time. That way you can see what actually affected the result.']}}
+ ]},
+{id:'risk',kind:'note',title:{ru:'Риск и мышление вероятностями',en:'Risk and Thinking in Probabilities'},author:EDITORS,year:2026,orig:'ru/en',license:'own',cat:'risk',
+ tags:['probability','drawdown','position','thinking'],
+ desc:{ru:'Почему убытки неизбежны, как считать просадку и выбирать размер позиции, чтобы пережить серию неудач.',en:'Why losses are unavoidable, how to count drawdown and choose position size so you can survive a run of bad luck.'},
+ chapters:[
+ {t:{ru:'Риск — цена участия',en:'Risk is the price of participation'},p:{
+  ru:['Убытки — не сбой системы, а часть её работы. Даже сильная стратегия проигрывает заметную долю сделок. Вопрос не в том, как их избежать, а в том, насколько они управляемы.',
+      'Риск удобно мерить заранее: расстояние от входа до стопа, умноженное на объём, — это сумма, которую вы готовы отдать за право проверить идею. Если сумма пугает, объём слишком велик.',
+      'Выжить важнее, чем выиграть. Пока капитал цел, у вас есть новые попытки. Большая потеря лишает не только денег, но и спокойствия, а значит и качества следующих решений.'],
+  en:['Losses are not a system failure but part of how it works. Even a strong strategy loses a noticeable share of its trades. The question is not how to avoid them but how manageable they are.',
+      'It helps to measure risk in advance: the distance from entry to stop multiplied by size is the sum you are willing to pay for the right to test an idea. If that sum scares you, the size is too large.',
+      'Surviving matters more than winning. While capital is intact, you have new attempts. A big loss takes away not only money but also calm, and with it the quality of your next decisions.']}},
+ {t:{ru:'Вероятности и серии',en:'Probabilities and streaks'},p:{
+  ru:['Отдельная сделка — это бросок монеты с перекошенными шансами. Исход одного броска мало что говорит о системе; смысл появляется только на серии.',
+      'Ожидание — это средняя выгода одной сделки: доля выигрышей, умноженная на средний выигрыш, минус доля проигрышей, умноженная на средний проигрыш. Стратегия с долей успеха 40% может быть прибыльной, если выигрыш втрое больше проигрыша.',
+      'Серии случаются, и это нормально. При доле неудач 50% десять убытков подряд — редкость, но на длинной дистанции встречается. Если вы не готовились к такой серии, она сломает не счёт, а решимость.',
+      'Не делайте выводов по пяти-десяти сделкам. Короткая выборка почти всегда выглядит лучше или хуже, чем реальность.'],
+  en:['A single trade is a coin toss with tilted odds. The outcome of one throw says little about the system; meaning appears only over a series.',
+      'Expectancy is the average gain per trade: the win rate times the average win, minus the loss rate times the average loss. A strategy with a 40% win rate can be profitable if the average win is three times the average loss.',
+      'Streaks happen, and that is normal. With a 50% failure rate ten losses in a row are rare, but over a long run they do occur. If you were not prepared for such a run, it will break not the account but your resolve.',
+      'Do not draw conclusions from five or ten trades. A short sample almost always looks better or worse than reality.']}},
+ {t:{ru:'Размер позиции и просадка',en:'Position size and drawdown'},p:{
+  ru:['Просадка — снижение капитала от максимума. Её арифметика несимметрична: после падения на 50% нужен рост на 100%, чтобы вернуться к исходной точке. Чем глубже яма, тем круче подъём.',
+      'Поэтому размер позиции подбирают от допустимого убытка. Если вы рискуете 1% капитала в сделке, то десять убытков подряд дадут просадку примерно 9,6%. При риске 10% та же серия оставит вас менее чем с 35% счёта.',
+      'Простое правило для новичка: риск на сделку — доля процента или около процента от капитала, суммарный дневной лимит заранее определён, а после достижения лимита торговля останавливается.',
+      'Увеличивайте размер только после устойчивых результатов на малом объёме и только постепенно. Если на большом объёме вы начинаете нервничать — это сигнал, что объём превысил ваш комфорт.'],
+  en:['Drawdown is the decline in capital from its peak. Its arithmetic is asymmetric: after a 50% fall you need a 100% gain to get back to the starting point. The deeper the hole, the steeper the climb.',
+      'That is why position size is chosen from the acceptable loss. If you risk 1% of capital per trade, ten losses in a row produce a drawdown of about 9.6%. At 10% risk the same run leaves you with less than 35% of the account.',
+      'A simple rule for a beginner: risk per trade is a fraction of a percent or about one percent of capital, the total daily limit is set in advance, and trading stops once the limit is reached.',
+      'Increase size only after steady results at a small volume, and only gradually. If you start getting nervous at a larger volume, that is a signal the size has exceeded your comfort.']}}
+ ]}
+];
+
+const EXT=[
+{id:'lefevre',title:{ru:'Воспоминания биржевого спекулянта',en:'Reminiscences of a Stock Operator'},author:{ru:'Эдвин Лефевр',en:'Edwin Lefèvre'},year:1923,orig:'en',cat:'emotions',tags:['speculation','classic','biography','greed'],
+ desc:{ru:'Вымышленный рассказ о жизни трейдера Ларри Ливингстона, во многом основанный на судьбе Джесси Ливермора. Классика о дисциплине и ошибках.',en:'A fictionalised account of trader Larry Livingston, closely modelled on Jesse Livermore. A classic on discipline and error.'},q:'Reminiscences of a Stock Operator Lefevre'},
+{id:'selden',title:{ru:'Психология фондового рынка',en:'The Psychology of the Stock Market'},author:{ru:'Джордж Селден',en:'George C. Selden'},year:1912,orig:'en',cat:'emotions',tags:['speculation','classic','thinking'],
+ desc:{ru:'Один из первых текстов, где поведение цен объясняется психологией участников.',en:'One of the first texts to explain price behaviour through the psychology of market participants.'},q:'Psychology of the Stock Market Selden'},
+{id:'mackay',title:{ru:'Наиболее распространённые заблуждения и безумства толпы',en:'Extraordinary Popular Delusions and the Madness of Crowds'},author:{ru:'Чарльз Маккей',en:'Charles Mackay'},year:1841,orig:'en',cat:'crowd',tags:['crowd','bubbles','history','classic'],
+ desc:{ru:'История массовых увлечений и паник, включая тюльпановую лихорадку и «Южные моря».',en:'A history of mass manias and panics, including the tulip mania and the South Sea bubble.'},q:'Extraordinary Popular Delusions and the Madness of Crowds Mackay'},
+{id:'lebon',title:{ru:'Психология народов и масс',en:'The Crowd: A Study of the Popular Mind'},author:{ru:'Гюстав Лебон',en:'Gustave Le Bon'},year:1895,orig:'fr',cat:'crowd',tags:['crowd','classic','thinking'],
+ desc:{ru:'Как люди меняют поведение в толпе. Оригинал — «Psychologie des foules».',en:'How people change their behaviour in a crowd. Original title: “Psychologie des foules”.'},q:'Psychologie des foules Le Bon'},
+{id:'clews',title:{ru:'Пятьдесят лет на Уолл-стрит',en:'Fifty Years in Wall Street'},author:{ru:'Генри Клюс',en:'Henry Clews'},year:1908,orig:'en',cat:'crowd',tags:['history','bubbles','biography'],
+ desc:{ru:'Воспоминания финансиста о паниках, подъёмах и нравах американской биржи.',en:'A financier’s memoir of panics, booms and the customs of the American exchange.'},q:'Fifty Years in Wall Street Clews'},
+{id:'james',title:{ru:'Принципы психологии',en:'The Principles of Psychology'},author:{ru:'Уильям Джеймс',en:'William James'},year:1890,orig:'en',cat:'mind',tags:['habits','thinking','classic'],
+ desc:{ru:'Основополагающий труд о сознании, внимании и привычках; глава о привычке полезна каждому, кто строит дисциплину.',en:'A foundational work on consciousness, attention and habit; the chapter on habit helps anyone building discipline.'},q:'Principles of Psychology William James'},
+{id:'allen',title:{ru:'Как человек мыслит',en:'As a Man Thinketh'},author:{ru:'Джеймс Аллен',en:'James Allen'},year:1903,orig:'en',cat:'mind',tags:['thinking','habits','classic'],
+ desc:{ru:'Короткое эссе о связи мыслей, характера и обстоятельств.',en:'A short essay on the link between thoughts, character and circumstances.'},q:'As a Man Thinketh James Allen'},
+{id:'aurelius',title:{ru:'Размышления',en:'Meditations'},author:{ru:'Марк Аврелий',en:'Marcus Aurelius'},year:175,yl:{ru:'ок. 170–180',en:'c. 170–180'},orig:'grc',cat:'mind',tags:['stoic','stress','classic'],
+ desc:{ru:'Личные записи римского императора о самообладании и принятии того, что от нас не зависит.',en:'The private notes of a Roman emperor on self-command and accepting what is not up to us.'},q:'Meditations Marcus Aurelius'}
+].map(b=>Object.assign({kind:'ext',license:'pd'},b));
+const ALL=BOOKS.concat(EXT);
+const byId=id=>ALL.find(b=>b.id===id);
+
+/* ===================== ИНТЕРФЕЙС (i18n) ===================== */
+const I={
+ru:{brand:'Холодная голова',skip:'Перейти к содержимому',lib:'Библиотека',bms:'Закладки',theme:'Тема',themeTo:'Переключить тему',lang:'Язык',
+ eyebrow:'Свободная библиотека',h1:'Холодная голова: психология трейдинга',lead:'Конспекты и книги об эмоциях, дисциплине и риске. Бесплатно, без регистрации и рекламы. Прогресс и закладки хранятся только в вашем браузере.',
+ p1:'Без подписки',p2:'Без аккаунтов',p3:'Без трекеров',cycle:'Эмоциональный цикл рынка',
+ ph:['Надежда','Эйфория','Страх','Капитуляция','Облегчение'],
+ resume:'Продолжить чтение',cont:'Продолжить',start:'Начать читать',ch:'Глава',of:'из',
+ libH:'Библиотека',search:'Поиск по названию, автору, году, тексту…',searchLbl:'Поиск',author:'Автор',allAuthors:'Все авторы',yFrom:'Год от',yTo:'Год до',
+ orig:'Язык оригинала',allOrig:'Любой',kind:'Формат',allKinds:'Любой',kNote:'Читать на сайте',kExt:'Внешний источник',sort:'Сортировка',
+ s0:'По умолчанию',s1:'Год: старые первыми',s2:'Год: новые первыми',s3:'Название А–Я',s4:'Автор А–Я',
+ cat:'Категория',tag:'Тег',allCats:'Все',found:'Найдено',reset:'Сбросить фильтры',
+ emptyH:'Ничего не найдено',emptyT:'Попробуйте изменить запрос или сбросить фильтры.',
+ hitsH:'Совпадения в тексте конспектов',read:'прочитано',min:'мин',license:'Права',own:'Материал сайта',pd:'Общественное достояние',
+ back:'← Библиотека',toc:'Оглавление',year:'Год',origL:'Язык оригинала',cats:'Категория',format:'Формат',time:'Время чтения',
+ srcH:'Где прочитать',srcNote:'Ссылки ведут в поиск по каталогам-источникам. Выберите проверенное издание.',
+ warn:'Статус авторских прав зависит от страны. Книга может быть в общественном достоянии в США, но не в вашей стране; переводы, комментарии и предисловия могут быть защищены отдельно. Проверьте права в своей стране перед использованием.',
+ gut:'Project Gutenberg',arch:'Internet Archive',wiki:'Wikisource',openNew:'откроется в новой вкладке',
+ aa:'Настройки чтения',fsz:'Размер шрифта',ffam:'Шрифт',serif:'С засечками',sans:'Без засечек',prev:'← Предыдущая',next:'Следующая →',finish:'К книге',
+ bmAdd:'Добавить закладку',bmDel:'Снять закладку',bmH:'Закладки',bmEmpty:'Закладок пока нет',bmEmptyT:'Нажмите на значок закладки рядом с абзацем в читалке.',
+ newest:'Сначала новые',oldest:'Сначала старые',del:'Удалить',goto:'Перейти',
+ disc:'Материалы носят образовательный характер и не являются инвестиционной рекомендацией. Торговля на финансовых рынках связана с риском потери средств.',
+ disc2:'Сайт не собирает персональные данные. Закладки, прогресс и настройки хранятся только в вашем браузере.',
+ notfound:'Страница не найдена',
+ noStore:'Хранилище браузера недоступно: прогресс не сохранится после закрытия страницы.'},
+en:{brand:'Cold Head',skip:'Skip to content',lib:'Library',bms:'Bookmarks',theme:'Theme',themeTo:'Switch theme',lang:'Language',
+ eyebrow:'A free library',h1:'Cold Head: trading psychology',lead:'Summaries and books on emotions, discipline and risk. Free, with no sign-up and no ads. Your progress and bookmarks live only in your browser.',
+ p1:'No subscription',p2:'No accounts',p3:'No trackers',cycle:'The market emotional cycle',
+ ph:['Hope','Euphoria','Fear','Capitulation','Relief'],
+ resume:'Continue reading',cont:'Continue',start:'Start reading',ch:'Chapter',of:'of',
+ libH:'Library',search:'Search by title, author, year, text…',searchLbl:'Search',author:'Author',allAuthors:'All authors',yFrom:'Year from',yTo:'Year to',
+ orig:'Original language',allOrig:'Any',kind:'Format',allKinds:'Any',kNote:'Read on site',kExt:'External source',sort:'Sort',
+ s0:'Default',s1:'Year: oldest first',s2:'Year: newest first',s3:'Title A–Z',s4:'Author A–Z',
+ cat:'Category',tag:'Tag',allCats:'All',found:'Found',reset:'Reset filters',
+ emptyH:'Nothing found',emptyT:'Try changing the query or resetting the filters.',
+ hitsH:'Matches in summary text',read:'read',min:'min',license:'Rights',own:'Site material',pd:'Public domain',
+ back:'← Library',toc:'Contents',year:'Year',origL:'Original language',cats:'Category',format:'Format',time:'Reading time',
+ srcH:'Where to read',srcNote:'Links lead to searches in the source catalogues. Pick a verified edition.',
+ warn:'Copyright status depends on the country. A book may be in the public domain in the US but not in yours; translations, commentary and forewords may be protected separately. Check the rights in your country before use.',
+ gut:'Project Gutenberg',arch:'Internet Archive',wiki:'Wikisource',openNew:'opens in a new tab',
+ aa:'Reading settings',fsz:'Font size',ffam:'Typeface',serif:'Serif',sans:'Sans-serif',prev:'← Previous',next:'Next →',finish:'To the book',
+ bmAdd:'Add bookmark',bmDel:'Remove bookmark',bmH:'Bookmarks',bmEmpty:'No bookmarks yet',bmEmptyT:'Press the bookmark icon next to a paragraph in the reader.',
+ newest:'Newest first',oldest:'Oldest first',del:'Delete',goto:'Open',
+ disc:'The materials are educational and are not investment advice. Trading in financial markets involves a risk of loss.',
+ disc2:'The site collects no personal data. Bookmarks, progress and settings are stored only in your browser.',
+ notfound:'Page not found',
+ noStore:'Browser storage is unavailable: progress will not persist after you close the page.'}
+};
+
+/* ===================== ХРАНИЛИЩЕ ===================== */
+const mem={};let storeOk=true;
+const S={
+  get(k,d){try{const v=localStorage.getItem('ch:'+k);if(v!==null)return JSON.parse(v)}catch(e){storeOk=false}return k in mem?mem[k]:d},
+  set(k,v){mem[k]=v;try{localStorage.setItem('ch:'+k,JSON.stringify(v))}catch(e){storeOk=false}}
+};
+
+/* ===================== СОСТОЯНИЕ ===================== */
+let lang=S.get('lang',null)||((navigator.language||'ru').toLowerCase().startsWith('ru')?'ru':'en');
+let themeSet=S.get('theme',null);               // 'light' | 'dark' | null (system)
+let fsize=S.get('fsize',19),ffam=S.get('ffam','serif');
+let progress=S.get('progress',{}),bms=S.get('bms',[]),bmOrder='new';
+const F={q:'',author:'',from:'',to:'',cat:'',tag:'',orig:'',kind:'',sort:'0'};
+const t=k=>I[lang][k];
+const L=o=>o[lang];
+
+/* ===================== УТИЛИТЫ ===================== */
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm=s=>String(s).toLowerCase().replace(/ё/g,'е');
+const $=(s,r=document)=>r.querySelector(s);
+const yearLbl=b=>b.yl?L(b.yl):String(b.year);
+const words=b=>b.chapters.reduce((n,c)=>n+c.p[lang].join(' ').split(/\s+/).length,0);
+const mins=b=>Math.max(1,Math.round(words(b)/190));
+function pct(b){const p=progress[b.id];if(!p||!p.read)return 0;return Math.round(Object.keys(p.read).length/b.chapters.length*100)}
+function lastRead(){let best=null;for(const id in progress){const b=byId(id);if(b&&b.kind==='note'&&progress[id].ts&&(!best||progress[id].ts>best.ts))best={b,ts:progress[id].ts}}return best&&best.b}
+const ICON={
+ search:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>',
+ bm:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h12v18l-6-4-6 4z"/></svg>',
+ theme:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 13A9 9 0 1111 3a7 7 0 0010 10z"/></svg>',
+ list:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>'
+};
+
+/* ===================== ТЕМА / ШАПКА ===================== */
+function applyTheme(){const r=document.documentElement;if(themeSet)r.setAttribute('data-theme',themeSet);else r.removeAttribute('data-theme')}
+function isDark(){return themeSet?themeSet==='dark':matchMedia('(prefers-color-scheme: dark)').matches}
+function toggleTheme(){themeSet=isDark()?'light':'dark';S.set('theme',themeSet);applyTheme();renderHeader()}
+function renderHeader(){
+  document.documentElement.lang=lang;document.title=lang==='ru'?'Холодная голова — библиотека по психологии трейдинга':'Cold Head — a trading psychology library';
+  $('#brandNm').textContent=t('brand');$('#skip').textContent=t('skip');
+  $('#nav').innerHTML=
+   `<a class="btn ghost" href="#/">${t('lib')}</a>
+    <a class="btn ghost" href="#/bookmarks" aria-label="${esc(t('bms'))}">${ICON.bm}<span class="lbl">${t('bms')}</span><span class="count" id="bmCount">${bms.length}</span></a>
+    <button class="btn" data-act="lang" aria-label="${esc(t('lang'))}">${lang==='ru'?'EN':'RU'}</button>
+    <button class="btn" data-act="theme" aria-label="${esc(t('themeTo'))}" title="${esc(t('themeTo'))}">${ICON.theme}</button>`;
+  $('#foot').innerHTML=`<p><b>${esc(t('disc'))}</b></p><p>${esc(t('disc2'))}${storeOk?'':' '+esc(t('noStore'))}</p>`;
+}
+function setLang(l){lang=l;S.set('lang',l);renderHeader();route(true)}
+
+/* ===================== МАРШРУТИЗАЦИЯ ===================== */
+let scrollHandler=null;
+function route(keep){
+  closeDrawer();
+  if(scrollHandler){removeEventListener('scroll',scrollHandler);scrollHandler=null}
+  const h=(location.hash||'#/').slice(1).split('/').filter(Boolean);
+  const main=$('#main');
+  if(h[0]==='book'&&byId(h[1]))viewBook(main,byId(h[1]));
+  else if(h[0]==='read'&&byId(h[1])&&byId(h[1]).kind==='note')viewReader(main,byId(h[1]),+h[2]||0,h[3]!==undefined?+h[3]:null);
+  else if(h[0]==='bookmarks')viewBookmarks(main);
+  else if(!h.length)viewLibrary(main);
+  else main.innerHTML=`<div class="wrap"><div class="empty" style="margin-top:40px"><b>${t('notfound')}</b><a href="#/">${t('back')}</a></div></div>`;
+  if(!keep||!h.length||h[0]!=='read')window.scrollTo(0,0);
+}
+
+/* ===================== ЭМОЦИОНАЛЬНЫЙ ЦИКЛ ===================== */
+function cycleSVG(){
+  const P=[[24,160],[120,118],[270,34],[372,126],[462,206],[560,146],[616,122]];
+  let d=`M${P[0][0]},${P[0][1]}`;
+  for(let i=0;i<P.length-1;i++){
+    const p0=P[i-1]||P[i],p1=P[i],p2=P[i+1],p3=P[i+2]||P[i+1],k=6;
+    d+=` C${(p1[0]+(p2[0]-p0[0])/k).toFixed(1)},${(p1[1]+(p2[1]-p0[1])/k).toFixed(1)} ${(p2[0]-(p3[0]-p1[0])/k).toFixed(1)},${(p2[1]-(p3[1]-p1[1])/k).toFixed(1)} ${p2[0]},${p2[1]}`;
+  }
+  const ph=I[lang].ph,dots=[1,2,3,4,5],pos=[[0,-16,'middle'],[0,-16,'middle'],[16,6,'start'],[0,28,'middle'],[0,-16,'middle']];
+  let s=`<svg viewBox="0 0 640 250" role="img" aria-label="${esc(t('cycle'))}: ${esc(ph.join(' → '))}">`;
+  s+=`<path class="cyc-area" d="${d} L616,250 L24,250 Z"/>`;
+  s+=`<path class="cyc-line" pathLength="1" d="${d}"/>`;
+  dots.forEach((pi,i)=>{const [x,y]=P[pi],[dx,dy,a]=pos[i];
+    s+=`<circle class="cyc-dot" cx="${x}" cy="${y}" r="7"/><text class="cyc-txt" x="${x+dx}" y="${y+dy}" text-anchor="${a}">${i+1}. ${esc(ph[i])}</text>`});
+  return s+'</svg>';
+}
+
+/* ===================== БИБЛИОТЕКА ===================== */
+function haystack(b){
+  const parts=[b.title.ru,b.title.en,b.author.ru,b.author.en,b.year,b.yl?b.yl.ru:'',b.desc.ru,b.desc.en,CATS[b.cat].ru,CATS[b.cat].en,...b.tags.map(k=>TAGS[k].ru+' '+TAGS[k].en)];
+  return norm(parts.join(' | '));
+}
+const HAY=new Map(ALL.map(b=>[b.id,haystack(b)]));
+function filtered(){
+  const q=norm(F.q.trim()),qs=q.length>=2?q.split(/\s+/).filter(Boolean):[];
+  const from=F.from===''?null:+F.from,to=F.to===''?null:+F.to;
+  let list=ALL.filter(b=>{
+    if(F.author&&b.author.en!==F.author)return false;
+    if(from!==null&&b.year<from)return false;
+    if(to!==null&&b.year>to)return false;
+    if(F.cat&&b.cat!==F.cat)return false;
+    if(F.tag&&!b.tags.includes(F.tag))return false;
+    if(F.orig&&b.orig!==F.orig)return false;
+    if(F.kind&&b.kind!==F.kind)return false;
+    return true;
+  });
+  const textHits=[];
+  if(qs.length){
+    const phrase=q;
+    list=list.filter(b=>{
+      const metaOk=qs.every(w=>HAY.get(b.id).includes(w));
+      let textOk=false;
+      if(b.kind==='note'){
+        b.chapters.forEach((c,ci)=>c.p[lang].forEach((para,pi)=>{
+          const np=norm(para),ix=np.indexOf(phrase);
+          if(ix>=0){textOk=true;textHits.push({b,ci,pi,para,ix})}
+        }));
+      }
+      return metaOk||textOk;
+    });
+  }
+  const s=F.sort,cmp=(f)=>(a,b)=>f(a).localeCompare(f(b),lang);
+  if(s==='1')list.sort((a,b)=>a.year-b.year);
+  else if(s==='2')list.sort((a,b)=>b.year-a.year);
+  else if(s==='3')list.sort(cmp(x=>L(x.title)));
+  else if(s==='4')list.sort(cmp(x=>L(x.author)));
+  const ids=new Set(list.map(b=>b.id));
+  return {list,hits:textHits.filter(h=>ids.has(h.b.id)).slice(0,30),qLen:q.length};
+}
+function viewLibrary(main){
+  const authors=[...new Map(ALL.map(b=>[b.author.en,b.author])).entries()].sort((a,b)=>L(a[1]).localeCompare(L(b[1]),lang));
+  const origs=[...new Set(ALL.map(b=>b.orig))];
+  const rl=lastRead();
+  main.innerHTML=`
+  <div class="wrap">
+   <section class="hero">
+    <div>
+      <p class="eyebrow">${t('eyebrow')}</p>
+      <h1 class="title">${esc(t('h1'))}</h1>
+      <p class="lead">${esc(t('lead'))}</p>
+      <div class="pills"><span class="pill">✓ ${t('p1')}</span><span class="pill">✓ ${t('p2')}</span><span class="pill">✓ ${t('p3')}</span></div>
+    </div>
+    <div class="cyclebox"><h2>${t('cycle')}</h2>${cycleSVG()}</div>
+   </section>
+   ${rl?resumeBlock(rl):''}
+   <section class="lib" aria-labelledby="libH">
+    <h2 class="h" id="libH">${t('libH')}</h2>
+    <div class="panel">
+     <div class="searchrow">${ICON.search}<label class="sr" for="fq">${t('searchLbl')}</label>
+      <input id="fq" type="search" autocomplete="off" placeholder="${esc(t('search'))}" value="${esc(F.q)}"></div>
+     <div class="filters">
+      <div class="field"><label for="fa">${t('author')}</label><select id="fa"><option value="">${t('allAuthors')}</option>${authors.map(([k,a])=>`<option value="${esc(k)}"${F.author===k?' selected':''}>${esc(L(a))}</option>`).join('')}</select></div>
+      <div class="field"><label>${t('yFrom')} / ${t('yTo')}</label><div class="years"><input id="ff" type="number" inputmode="numeric" aria-label="${esc(t('yFrom'))}" placeholder="…" value="${esc(F.from)}"><input id="ft" type="number" inputmode="numeric" aria-label="${esc(t('yTo'))}" placeholder="…" value="${esc(F.to)}"></div></div>
+      <div class="field"><label for="fo">${t('orig')}</label><select id="fo"><option value="">${t('allOrig')}</option>${origs.map(o=>`<option value="${esc(o)}"${F.orig===o?' selected':''}>${esc(L(ORIG[o]))}</option>`).join('')}</select></div>
+      <div class="field"><label for="fk">${t('kind')}</label><select id="fk"><option value="">${t('allKinds')}</option><option value="note"${F.kind==='note'?' selected':''}>${t('kNote')}</option><option value="ext"${F.kind==='ext'?' selected':''}>${t('kExt')}</option></select></div>
+      <div class="field"><label for="fs">${t('sort')}</label><select id="fs">${[0,1,2,3,4].map(i=>`<option value="${i}"${F.sort==i?' selected':''}>${t('s'+i)}</option>`).join('')}</select></div>
+     </div>
+     <div class="chiprow" id="catchips" role="group" aria-label="${esc(t('cat'))}"></div>
+     <div class="chiprow" id="tagchips" role="group" aria-label="${esc(t('tag'))}"></div>
+    </div>
+    <div id="results" aria-live="polite"></div>
+   </section>
+  </div>`;
+  updateResults();
+}
+function resumeBlock(b){
+  const p=progress[b.id],ci=Math.min(p.last||0,b.chapters.length-1);
+  return `<div class="resume"><div class="tx"><small>${t('resume')}</small><b>${esc(L(b.title))}</b><small>${t('ch')} ${ci+1} ${t('of')} ${b.chapters.length} · ${pct(b)}% ${t('read')}</small></div><a class="btn primary" href="#/read/${b.id}/${ci}">${t('cont')}</a></div>`;
+}
+function chipHTML(key,val,label,on){return `<button class="chip" data-chip="${key}" data-val="${esc(val)}" aria-pressed="${on}">${esc(label)}</button>`}
+function updateResults(){
+  $('#catchips').innerHTML=`<span class="cl">${t('cat')}</span>`+chipHTML('cat','',t('allCats'),!F.cat)+Object.keys(CATS).map(k=>chipHTML('cat',k,L(CATS[k]),F.cat===k)).join('');
+  const tg=Object.keys(TAGS).filter(k=>ALL.some(b=>b.tags.includes(k))).sort((a,b)=>L(TAGS[a]).localeCompare(L(TAGS[b]),lang));
+  $('#tagchips').innerHTML=`<span class="cl">${t('tag')}</span>`+chipHTML('tag','',t('allCats'),!F.tag)+tg.map(k=>chipHTML('tag',k,'#'+L(TAGS[k]),F.tag===k)).join('');
+  const {list,hits}=filtered();
+  const active=Object.entries(F).some(([k,v])=>k==='sort'?v!=='0':v!=='');
+  let h=`<div class="statusrow"><div class="found">${t('found')}: <b>${list.length}</b></div>${active?`<button class="btn" data-act="reset">${t('reset')}</button>`:''}</div>`;
+  if(!list.length)h+=`<div class="empty"><b>${t('emptyH')}</b>${t('emptyT')}<br><br><button class="btn primary" data-act="reset">${t('reset')}</button></div>`;
+  else h+=`<div class="grid">${list.map(card).join('')}</div>`;
+  if(hits.length){
+    const q=F.q.trim();
+    h+=`<div class="hits"><h3>${t('hitsH')}</h3>${hits.map(x=>{
+      const a=Math.max(0,x.ix-60),e=Math.min(x.para.length,x.ix+q.length+110);
+      const snip=(a>0?'…':'')+esc(x.para.slice(a,x.ix))+'<mark>'+esc(x.para.slice(x.ix,x.ix+q.length))+'</mark>'+esc(x.para.slice(x.ix+q.length,e))+(e<x.para.length?'…':'');
+      return `<a class="hit" href="#/read/${x.b.id}/${x.ci}/${x.pi}"><div class="w">${esc(L(x.b.title))} · ${t('ch')} ${x.ci+1}: ${esc(L(x.b.chapters[x.ci].t))}</div>${snip}</a>`}).join('')}</div>`;
+  }
+  $('#results').innerHTML=h;
+}
+function card(b){
+  const cat=CATS[b.cat],pc=b.kind==='note'?pct(b):0;
+  return `<a class="card" href="#/book/${b.id}" style="--cc:${cat.c}">
+    <div class="ty">${b.kind==='note'?t('kNote'):t('kExt')}</div>
+    <h3>${esc(L(b.title))}</h3>
+    <div class="au">${esc(L(b.author))} · ${esc(yearLbl(b))}</div>
+    <p class="ds">${esc(L(b.desc))}</p>
+    <div class="badges"><span class="badge">${esc(L(cat))}</span><span class="badge">${esc(L(ORIG[b.orig]))}</span><span class="badge ${b.license}">${t(b.license)}</span></div>
+    <div class="badges">${b.tags.slice(0,3).map(k=>`<span class="badge">#${esc(L(TAGS[k]))}</span>`).join('')}</div>
+    ${b.kind==='note'?`<div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pc}"><i style="width:${pc}%"></i></div><div class="proglbl">${pc}% ${t('read')} · ${mins(b)} ${t('min')}</div>`:''}
+  </a>`;
+}
+
+/* ===================== СТРАНИЦА МАТЕРИАЛА ===================== */
+function viewBook(main,b){
+  const cat=CATS[b.cat];
+  let body='';
+  if(b.kind==='note'){
+    const p=progress[b.id]||{},ci=Math.min(p.last||0,b.chapters.length-1),has=pct(b)>0||p.last;
+    body=`<a class="btn primary" href="#/read/${b.id}/${ci}">${has?t('cont')+' · '+t('ch')+' '+(ci+1):t('start')}</a>
+     <h2 style="font-family:var(--display);margin:26px 0 0">${t('toc')}</h2>
+     <ol class="toc">${b.chapters.map((c,i)=>`<li><a href="#/read/${b.id}/${i}" class="${p.read&&p.read[i]?'rd':''}"><span class="n">${p.read&&p.read[i]?'✓':i+1}</span><span>${esc(L(c.t))}</span></a></li>`).join('')}</ol>`;
+  }else{
+    const q=encodeURIComponent(b.q);
+    body=`<div class="warn">${esc(t('warn'))}</div>
+     <h2 style="font-family:var(--display);margin:0">${t('srcH')}</h2><p style="color:var(--muted);margin:4px 0 0">${esc(t('srcNote'))}</p>
+     <div class="links">
+      <a href="https://www.gutenberg.org/ebooks/search/?query=${q}" target="_blank" rel="noopener noreferrer"><span>${t('gut')}</span><small>${t('openNew')} ↗</small></a>
+      <a href="https://archive.org/search?query=${q}" target="_blank" rel="noopener noreferrer"><span>${t('arch')}</span><small>${t('openNew')} ↗</small></a>
+      <a href="https://${b.orig==='fr'?'fr':'en'}.wikisource.org/w/index.php?search=${q}" target="_blank" rel="noopener noreferrer"><span>${t('wiki')}</span><small>${t('openNew')} ↗</small></a>
+     </div>`;
+  }
+  main.innerHTML=`<div class="wrap"><article class="bookpage">
+   <div class="crumb"><a href="#/">${t('back')}</a></div>
+   <div class="ty" style="color:${cat.c};font-weight:600;font-size:13px;letter-spacing:.05em;text-transform:uppercase">${esc(L(cat))}</div>
+   <h1>${esc(L(b.title))}</h1><div class="au">${esc(L(b.author))}</div>
+   <p style="font-size:17px">${esc(L(b.desc))}</p>
+   <div class="meta">
+     <div><small>${t('year')}</small><span>${esc(yearLbl(b))}</span></div>
+     <div><small>${t('origL')}</small><span>${esc(L(ORIG[b.orig]))}</span></div>
+     <div><small>${t('format')}</small><span>${b.kind==='note'?t('kNote'):t('kExt')}</span></div>
+     <div><small>${t('license')}</small><span>${t(b.license)}</span></div>
+     ${b.kind==='note'?`<div><small>${t('time')}</small><span>${mins(b)} ${t('min')}</span></div>`:''}
+   </div>
+   <div class="badges">${b.tags.map(k=>`<span class="badge">#${esc(L(TAGS[k]))}</span>`).join('')}</div>
+   <div style="margin-top:20px">${body}</div>
+  </article></div>`;
+}
+
+/* ===================== ЧИТАЛКА ===================== */
+let cur=null;
+function viewReader(main,b,ci,pi){
+  ci=Math.max(0,Math.min(ci,b.chapters.length-1));
+  const ch=b.chapters[ci],paras=ch.p[lang];
+  const pr=progress[b.id]=progress[b.id]||{read:{},scroll:{}};pr.read=pr.read||{};pr.scroll=pr.scroll||{};
+  pr.last=ci;pr.ts=Date.now();S.set('progress',progress);
+  cur={b,ci,done:!!pr.read[ci]};
+  const isBm=i=>bms.some(x=>x.id===b.id&&x.ch===ci&&x.p===i);
+  document.title=`${L(ch.t)} — ${L(b.title)}`;
+  main.innerHTML=`
+  <div class="rbar" aria-hidden="true"><i id="rfill"></i></div>
+  <div class="wrap">
+   <div class="rtools">
+     <a class="btn" href="#/book/${b.id}">${t('back').replace('Библиотека','').replace('Library','')}${esc(L(b.title))}</a>
+     <span class="sp"></span>
+     <button class="btn" data-act="toc">${ICON.list}<span class="lbl">${t('toc')}</span></button>
+     <button class="btn" data-act="settings" aria-expanded="false" aria-controls="setp" aria-label="${esc(t('aa'))}"><b>Aa</b></button>
+     <div class="setp" id="setp" role="dialog" aria-label="${esc(t('aa'))}">
+       <div class="row"><label class="t" for="fsr">${t('fsz')}: <span id="fszv">${fsize}</span> px</label><input id="fsr" type="range" min="15" max="28" step="1" value="${fsize}"></div>
+       <div class="row"><span class="t" style="display:block;font-size:12px;color:var(--muted);font-weight:600;margin-bottom:6px">${t('ffam')}</span><div class="seg"><button class="btn" data-ffam="serif" aria-pressed="${ffam==='serif'}">${t('serif')}</button><button class="btn" data-ffam="sans" aria-pressed="${ffam==='sans'}">${t('sans')}</button></div></div>
+       <div class="row"><button class="btn" data-act="theme" style="width:100%;justify-content:center">${ICON.theme} ${t('themeTo')}</button></div>
+     </div>
+   </div>
+   <article class="rtext ${ffam==='sans'?'sans':''}" id="rtext" style="--fs:${fsize}px">
+     <div class="kick">${esc(L(b.title))} · ${t('ch')} ${ci+1} ${t('of')} ${b.chapters.length}</div>
+     <h1>${esc(L(ch.t))}</h1>
+     ${paras.map((p,i)=>`<div class="para" id="p${i}"><p>${esc(p)}</p><button class="bm" data-bm="${i}" aria-pressed="${isBm(i)}" aria-label="${esc(isBm(i)?t('bmDel'):t('bmAdd'))}" title="${esc(isBm(i)?t('bmDel'):t('bmAdd'))}">${ICON.bm}</button></div>`).join('')}
+   </article>
+   <nav class="rnav">
+     ${ci>0?`<a class="btn" href="#/read/${b.id}/${ci-1}">${t('prev')}</a>`:'<span></span>'}
+     ${ci<b.chapters.length-1?`<a class="btn primary" href="#/read/${b.id}/${ci+1}" data-finish="1">${t('next')}</a>`:`<a class="btn primary" href="#/book/${b.id}" data-finish="1">${t('finish')}</a>`}
+   </nav>
+  </div>`;
+  renderDrawer(b,ci);
+  // позиция
+  requestAnimationFrame(()=>{
+    if(pi!==null&&$('#p'+pi)){const el=$('#p'+pi);el.scrollIntoView({block:'center'});el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),2200)}
+    else{const f=pr.scroll[ci]||0,max=document.documentElement.scrollHeight-innerHeight;if(f>0&&f<.96&&max>0)scrollTo(0,f*max)}
+    onScroll();
+  });
+  let tm=null;
+  scrollHandler=()=>{if(tm)return;tm=setTimeout(()=>{tm=null;onScroll()},120)};
+  addEventListener('scroll',scrollHandler,{passive:true});
+}
+function onScroll(){
+  if(!cur)return;
+  const {b,ci}=cur,max=document.documentElement.scrollHeight-innerHeight;
+  const f=max>0?Math.min(1,Math.max(0,scrollY/max)):1;
+  const pr=progress[b.id];
+  if(f>=.96&&!pr.read[ci]){pr.read[ci]=true;cur.done=true}
+  pr.scroll[ci]=f>=.96?0:f;pr.ts=Date.now();pr.last=ci;
+  S.set('progress',progress);
+  const fill=$('#rfill');if(fill){const done=Object.keys(pr.read).length-(pr.read[ci]?1:0);fill.style.width=Math.min(100,((done+f)/b.chapters.length)*100)+'%'}
+}
+function markRead(){if(cur){const pr=progress[cur.b.id];if(pr){pr.read[cur.ci]=true;pr.scroll[cur.ci]=0;S.set('progress',progress)}}}
+function renderDrawer(b,ci){
+  const p=progress[b.id]||{};
+  $('#drawer').innerHTML=`<h2>${esc(L(b.title))}</h2><ol class="toc">${b.chapters.map((c,i)=>`<li><a href="#/read/${b.id}/${i}" class="${p.read&&p.read[i]?'rd':''}" ${i===ci?'aria-current="page"':''}><span class="n">${p.read&&p.read[i]?'✓':i+1}</span><span>${esc(L(c.t))}</span></a></li>`).join('')}</ol>`;
+}
+const openDrawer=()=>{$('#drawer').classList.add('open');$('#scrim').classList.add('on')};
+function closeDrawer(){$('#drawer').classList.remove('open');$('#scrim').classList.remove('on')}
+
+/* ===================== ЗАКЛАДКИ ===================== */
+function toggleBm(i){
+  if(!cur)return;const {b,ci}=cur;
+  const ix=bms.findIndex(x=>x.id===b.id&&x.ch===ci&&x.p===i);
+  if(ix>=0)bms.splice(ix,1);else bms.push({id:b.id,ch:ci,p:i,ts:Date.now()});
+  S.set('bms',bms);
+  const btn=$(`[data-bm="${i}"]`),on=ix<0;
+  btn.setAttribute('aria-pressed',on);btn.setAttribute('aria-label',on?t('bmDel'):t('bmAdd'));btn.title=on?t('bmDel'):t('bmAdd');
+  $('#bmCount').textContent=bms.length;
+}
+function viewBookmarks(main){
+  const list=bms.filter(x=>byId(x.id)).slice().sort((a,b)=>bmOrder==='new'?b.ts-a.ts:a.ts-b.ts);
+  main.innerHTML=`<div class="wrap"><section class="bmpage">
+   <h1>${t('bmH')}</h1>
+   <div class="statusrow"><div class="found">${list.length}</div>
+     <div class="seg"><button class="btn" data-ord="new" aria-pressed="${bmOrder==='new'}">${t('newest')}</button><button class="btn" data-ord="old" aria-pressed="${bmOrder==='old'}">${t('oldest')}</button></div></div>
+   ${list.length?list.map(x=>{const b=byId(x.id),c=b.chapters[x.ch],txt=c&&c.p[lang][x.p];if(!txt)return '';
+     return `<div class="bmitem"><a class="go" href="#/read/${x.id}/${x.ch}/${x.p}"><div class="w">${esc(L(b.title))} · ${t('ch')} ${x.ch+1}: ${esc(L(c.t))} · ${new Date(x.ts).toLocaleDateString(lang==='ru'?'ru-RU':'en-GB')}</div><q>${esc(txt.length>200?txt.slice(0,200)+'…':txt)}</q></a>
+     <button class="btn" data-delbm="${x.id}|${x.ch}|${x.p}">${t('del')}</button></div>`}).join('')
+     :`<div class="empty"><b>${t('bmEmpty')}</b>${t('bmEmptyT')}</div>`}
+  </section></div>`;
+}
+
+/* ===================== СОБЫТИЯ ===================== */
+document.addEventListener('click',e=>{
+  const el=e.target.closest('[data-act],[data-chip],[data-bm],[data-ffam],[data-ord],[data-delbm],[data-finish]');
+  if(e.target.id==='scrim'){closeDrawer();return}
+  if(!el){const sp=$('#setp');if(sp&&sp.classList.contains('open')&&!e.target.closest('#setp'))sp.classList.remove('open');return}
+  const a=el.dataset.act;
+  if(a==='lang')setLang(lang==='ru'?'en':'ru');
+  else if(a==='theme')toggleTheme();
+  else if(a==='reset'){Object.assign(F,{q:'',author:'',from:'',to:'',cat:'',tag:'',orig:'',kind:'',sort:'0'});viewLibrary($('#main'))}
+  else if(a==='toc')openDrawer();
+  else if(a==='settings'){const sp=$('#setp'),on=!sp.classList.contains('open');sp.classList.toggle('open',on);el.setAttribute('aria-expanded',on);e.stopPropagation()}
+  else if(el.dataset.chip){F[el.dataset.chip]=el.dataset.val;updateResults()}
+  else if(el.dataset.bm!==undefined)toggleBm(+el.dataset.bm);
+  else if(el.dataset.ffam){ffam=el.dataset.ffam;S.set('ffam',ffam);$('#rtext').classList.toggle('sans',ffam==='sans');document.querySelectorAll('[data-ffam]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.ffam===ffam))}
+  else if(el.dataset.ord){bmOrder=el.dataset.ord;viewBookmarks($('#main'))}
+  else if(el.dataset.delbm){const [id,c,p]=el.dataset.delbm.split('|');bms=bms.filter(x=>!(x.id===id&&x.ch==c&&x.p==p));S.set('bms',bms);$('#bmCount').textContent=bms.length;viewBookmarks($('#main'))}
+  else if(el.dataset.finish)markRead();
+});
+document.addEventListener('input',e=>{
+  const id=e.target.id;
+  if(id==='fq'){F.q=e.target.value;updateResults()}
+  else if(id==='ff'){F.from=e.target.value;updateResults()}
+  else if(id==='ft'){F.to=e.target.value;updateResults()}
+  else if(id==='fsr'){fsize=+e.target.value;S.set('fsize',fsize);$('#rtext').style.setProperty('--fs',fsize+'px');$('#fszv').textContent=fsize}
+});
+document.addEventListener('change',e=>{
+  const m={fa:'author',fo:'orig',fk:'kind',fs:'sort'}[e.target.id];
+  if(m){F[m]=e.target.value;updateResults()}
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closeDrawer();const sp=$('#setp');if(sp)sp.classList.remove('open')}
+});
+addEventListener('hashchange',()=>route());
+matchMedia('(prefers-color-scheme: dark)').addEventListener&&matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{if(!themeSet)renderHeader()});
+
+/* ===================== СТАРТ ===================== */
+applyTheme();renderHeader();route();
+</script>
+</body>
+</html>
